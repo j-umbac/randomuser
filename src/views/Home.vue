@@ -36,7 +36,7 @@ import Dropdown from 'primevue/dropdown';
 import Ripple from 'primevue/ripple';
 import ScrollTop from 'primevue/scrolltop';
 import { genders } from '@/constants/genders';
-import getData from '@/composables/use-Data';
+import useData from '@/composables/use-Data';
 import UserList from '../components/user-list.vue';
 
 export default defineComponent({
@@ -44,7 +44,7 @@ export default defineComponent({
   components: { Button, InputNumber, Dropdown, ScrollTop, UserList },
   directives: { Ripple },
   setup() {
-    const { getUsers, users, loading, error, quantity, gender } = getData();
+    const { getUsers, users, loading, error, quantity, gender } = useData();
 
     function updateList() {
       getUsers();

@@ -4,20 +4,6 @@
   </div>
 </template>
 
-<!-- <script lang="ts">
-import { defineComponent, onMounted } from 'vue';
-import { RouteName } from './constants/route-names';
-import router from './router';
-
-export default defineComponent({
-  setup() {
-    onMounted(() => {
-      router.push({ name: RouteName.Home, params: { page: 1 } });
-    });
-  },
-});
-</script> -->
-
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -1,9 +1,10 @@
 import { ref } from 'vue';
-import getApi from '@/composables/use-Api';
+import useApi from '@/composables/use-Api';
+import { Result } from '@/interface/RandomUser';
 
-function getData() {
-  const { callApi } = getApi();
-  const users = ref(null);
+export default function useData() {
+  const { callApi } = useApi();
+  const users = ref<Result[]>();
   const error = ref(false);
   const loading = ref(false);
   const quantity = ref(1);
@@ -15,5 +16,3 @@ function getData() {
 
   return { getUsers, users, loading, error, quantity, gender };
 }
-
-export default getData;

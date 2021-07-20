@@ -3,15 +3,15 @@
     <DataTable
       :value="users"
       :paginator="true"
-      :rows="5"
+      :rows="10"
       removableSort
       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-      :rowsPerPageOptions="[5, 10, 15, 20]"
       :autoLayout="true"
       v-model:selection="selectedUser"
       selectionMode="single"
       @row-click="openModal"
       @page="onPage($event)"
+      @sort="sortList"
     >
       <template #empty> No users found. </template>
       <template #loading> Loading user data. Please wait. </template>
@@ -20,7 +20,7 @@
           <img :src="data.picture.large" width="60" />
         </template>
       </Column>
-      <Column field="name.first" header="Name" :sortable="true">
+      <Column field="name.first" header="Name" sortable>
         <template #body="{ data }"> {{ data.name.first }} {{ data.name.last }} </template>
       </Column>
       <Column field="email" header="Email"></Column>
@@ -46,20 +46,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, PropType } from 'vue';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Chip from 'primevue/chip';
 import UserModal from '../components/user-modal.vue';
 import router from '@/router';
 import { RouteName } from '@/constants/route-names';
+import { IRandomUser } from '@/interface/RandomUser';
+import IPage from '@/interface/page';
 
 export default defineComponent({
   name: 'UserList',
   components: { DataTable, Column, Chip, UserModal },
   props: {
     users: {
-      type: Object,
+      type: Object as PropType<IRandomUser>,
       required: true,
       default() {
         return null;
@@ -72,6 +74,10 @@ export default defineComponent({
     const showModalCard = ref(false);
     const maxPage = ref(1);
 
+    function sortList() {
+      router.push({ name: RouteName.List, params: { page: 1 } });
+    }
+
     function closeModal() {
       showModalCard.value = false;
       router.push({ name: RouteName.List, params: { page: pageNumber.value } });
@@ -79,16 +85,16 @@ export default defineComponent({
 
     function openModal() {
       showModalCard.value = true;
-      //router.push({ name: RouteName.User, params: { id: selectedUser.value.id.value } });
       router.push({ name: RouteName.User, params: { id: Math.round(Math.random() * 100000) } });
     }
-    function onPage(event: any) {
+
+    function onPage<Type extends IPage>(event: Type) {
       pageNumber.value = event.page + 1;
       maxPage.value = event.pageCount;
       router.push({ name: RouteName.List, params: { page: pageNumber.value } });
     }
 
-    return { selectedUser, showModalCard, onPage, openModal, closeModal };
+    return { selectedUser, showModalCard, onPage, openModal, closeModal, sortList };
   },
 });
 </script>

@@ -9,7 +9,7 @@ const routes: Array<RouteRecordRaw> = [
     props: true,
   },
   {
-    path: '/?page=:page',
+    path: '/:page',
     name: RouteName.List,
     component: () => import('../views/Home.vue'),
     props: true,
