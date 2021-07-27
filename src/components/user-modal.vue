@@ -20,16 +20,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import Card from 'primevue/card';
 import Chip from 'primevue/chip';
+import { IResult } from '@/interface/RandomUser';
 
 export default defineComponent({
   name: 'UserModal',
   components: { Card, Chip },
   props: {
     user: {
-      type: Object,
+      type: Object as PropType<IResult>,
       required: true,
     },
   },

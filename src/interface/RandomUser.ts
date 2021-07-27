@@ -1,9 +1,9 @@
 export interface IRandomUser {
-  results: Result[];
+  results: IResult[];
   error: string;
 }
 
-export interface Result {
+export interface IResult {
   gender: string;
   name: Name;
   location: Location;
@@ -20,12 +20,18 @@ export interface ID {
 }
 
 export interface Location {
-  street: string;
+  street: Street;
   city: string;
   state: string;
   postcode: string;
   coordinates: Coordinates;
   timezone: Timezone;
+  country: string;
+}
+
+export interface Street {
+  number: number;
+  name: string;
 }
 
 export interface Coordinates {

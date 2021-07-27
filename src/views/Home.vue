@@ -2,7 +2,7 @@
   <div class="home">
     <div class="topBar">
       <h1>Random User Generator</h1>
-      <form>
+      <form @keyup.enter="updateList">
         <div class="Menu">
           <p>Number of Random Users to be Generated:</p>
           <InputNumber v-model="quantity" :min="1" showButtons />
@@ -20,7 +20,7 @@
         </div>
       </form>
     </div>
-    <div v-if="error">Oops! Cannot fetch data. Please try again.</div>
+    <div v-if="error">Oops! Cannot fetch data. Please try again.<br><br>{{errorMsg}}</div>
     <div v-if="users" class="dispContainer">
       <UserList :users="users" />
     </div>
@@ -36,7 +36,7 @@ import Dropdown from 'primevue/dropdown';
 import Ripple from 'primevue/ripple';
 import ScrollTop from 'primevue/scrolltop';
 import { genders } from '@/constants/genders';
-import useData from '@/composables/use-Data';
+import useData from '@/composables/use-data';
 import UserList from '../components/user-list.vue';
 
 export default defineComponent({
@@ -44,7 +44,7 @@ export default defineComponent({
   components: { Button, InputNumber, Dropdown, ScrollTop, UserList },
   directives: { Ripple },
   setup() {
-    const { getUsers, users, loading, error, quantity, gender } = useData();
+    const { getUsers, users, loading, error, quantity, gender, errorMsg } = useData();
 
     function updateList() {
       getUsers();
@@ -58,6 +58,7 @@ export default defineComponent({
       gender,
       genders,
       updateList,
+      errorMsg,
     };
   },
 });

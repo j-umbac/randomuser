@@ -3,12 +3,14 @@
     <DataTable
       :value="users"
       :paginator="true"
-      :rows="10"
+      :rows="5"
+      :rowsPerPageOptions="[5,10,20,50]"
       removableSort
       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :autoLayout="true"
       v-model:selection="selectedUser"
       selectionMode="single"
+      paginatorPosition="top"
       @row-click="openModal"
       @page="onPage($event)"
       @sort="sortList"
@@ -53,7 +55,7 @@ import Chip from 'primevue/chip';
 import UserModal from '../components/user-modal.vue';
 import router from '@/router';
 import { RouteName } from '@/constants/route-names';
-import { IRandomUser } from '@/interface/RandomUser';
+import { IResult } from '@/interface/RandomUser';
 import IPage from '@/interface/page';
 
 export default defineComponent({
@@ -61,7 +63,7 @@ export default defineComponent({
   components: { DataTable, Column, Chip, UserModal },
   props: {
     users: {
-      type: Object as PropType<IRandomUser>,
+      type: Object as PropType<IResult> | any,
       required: true,
       default() {
         return null;

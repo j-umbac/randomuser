@@ -1,17 +1,13 @@
 import { Ref } from 'vue';
-import fetchApiService from '@/service/fetch-api-service';
+import fetchApi from '@/api/fetch-api';
 
 const url = 'https://randomuser.me/api/?';
-
 const searchParams = new URLSearchParams();
 
 export default function useApi() {
-  const sendRequest = fetchApiService();
-  async function callApi(error: Ref<boolean>, loading: Ref<boolean>, quantity: number, gender: string) {
-    searchParams.set('exc', 'login,registered,dob,nat');
-    searchParams.set('results', quantity.toString());
-    searchParams.set('gender', gender);
-
+  const sendRequest = fetchApi();
+  async function get(url: string, searchParams: URLSearchParams, error: Ref<boolean>, loading: Ref<boolean>) {
+    
     const options = {
       method: 'GET',
       headers: {
@@ -34,11 +30,11 @@ export default function useApi() {
       return data;
     } catch (err) {
       error.value = true;
-      console.log(err);
+      console.error('Error: ', err);
     } finally {
       loading.value = false;
     }
   }
 
-  return { callApi };
+  return { get };
 }
